@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8
+    container_name: MySQL
+    command: ['mysqld', '--character-set-server=utf8', '--default-authentication-plugin=mysql_native_password']
+    restart: on-failure
+    environment:
+        MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - type: volume
+        source: database
+        target: /var/lib/mysql  
+    ports:
+        - 3306:3306
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpMyAdmin
+      environment:
+          PMA_HOST: mysql
+      ports:
+          - 8081:80
+volumes:
+  database:
